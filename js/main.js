@@ -174,7 +174,8 @@ function handleIceCandidate(event) {
 
 function handleRemoteStreamAdded(event) {
   console.log('Remote stream added.');
-  remoteVideo.src = window.URL.createObjectURL(event.stream);
+  var blob = new Blob([new Uint8Array(event.stream)], {type: "octet/stream"});
+  remoteVideo.src = window.URL.createObjectURL(blob);
   remoteStream = event.stream;
 }
 
@@ -234,12 +235,6 @@ function requestTurn(turnURL) {
     xhr.open('GET', turnURL, true);
     xhr.send();
   }
-}
-
-function handleRemoteStreamAdded(event) {
-  console.log('Remote stream added.');
-  remoteVideo.src = window.URL.createObjectURL(event.stream);
-  remoteStream = event.stream;
 }
 
 function handleRemoteStreamRemoved(event) {
