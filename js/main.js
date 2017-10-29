@@ -174,8 +174,7 @@ function handleIceCandidate(event) {
 
 function handleRemoteStreamAdded(event) {
   console.log('Remote stream added.');
-  var blob = new Blob([new Uint8Array(event.stream)], {type: "octet/stream"});
-  remoteVideo.src = window.URL.createObjectURL(blob);
+  remoteVideo.src = window.URL.createObjectURL(event.stream);
   remoteStream = event.stream;
 }
 
@@ -211,7 +210,7 @@ function onCreateSessionDescriptionError(error) {
 function requestTurn(turnURL) {
   var turnExists = false;
   for (var i in pcConfig.iceServers) {
-    if (pcConfig.iceServers[i].url.substr(0, 5) === 'turn:') {
+    if (pcConfig.iceServers[i].urls.substr(0, 5) === 'turn:') {
       turnExists = true;
       turnReady = true;
       break;
