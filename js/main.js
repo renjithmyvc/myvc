@@ -9,10 +9,18 @@ var remoteStream;
 var turnReady;
 
 var pcConfig = {
-  'iceServers': [{
-    'urls': 'stun:stun.l.google.com:19302'
-  }]
-};
+  iceServers:[
+    {urls: ["turn:173.194.72.127:19305?transport=udp",
+       "turn:[2404:6800:4008:C01::7F]:19305?transport=udp",
+       "turn:173.194.72.127:443?transport=tcp",
+       "turn:[2404:6800:4008:C01::7F]:443?transport=tcp"
+       ],
+     username:"CKjCuLwFEgahxNRjuTAYzc/s6OMT",
+     credential:"u1SQDR/SQsPQIxXNWQT7czc/G4c="
+    },
+    {urls:["stun:stun.l.google.com:19302"]}
+]};
+
 
 // Set up audio and video regardless of what devices are present.
 var sdpConstraints = {
@@ -210,7 +218,7 @@ function onCreateSessionDescriptionError(error) {
 function requestTurn(turnURL) {
   var turnExists = false;
   for (var i in pcConfig.iceServers) {
-    if (pcConfig.iceServers[i].urls.substr(0, 5) === 'turn:') {
+    if (pcConfig.iceServers[i].urls[0].substr(0, 5) === 'turn:') {
       turnExists = true;
       turnReady = true;
       break;
